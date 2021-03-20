@@ -1,10 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
+import ContactForm from './ContactForm.js'
 
 function App() {
   return (
     <div className="App">
-      <p>Here comes our code</p>
+      <ContactForm />
     </div>
   );
 }
