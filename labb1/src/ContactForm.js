@@ -1,6 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react'
 import Greeting from './Greeting.js'
 import SubmitCounts from './SubmitCounts.js'
+import './App.css';
+import SubmitButton from './SubmitButton.js'
 
 function ContactForm() {
 
@@ -14,23 +16,30 @@ function ContactForm() {
     const [count, setCount] = useState(0);
 
     const inputRef = useRef();
-    var inputsFilled = false
 
+    let enableButton = "red";
     function handleSubmit(event){
         event.preventDefault();
         var partialState = {};
         partialState['desc'] = inputRef.current.value;
-        inputsFilled = true;
         setInputName(inputName => {
             return{
             ...inputName,
             ...partialState
             }
             });
-         setCount(count + 1);
 
-         setInputName(initialState)
-        console.log(`btn shows ${inputsFilled} and ${inputName.desc} `);
+        if(inputName.firstName === initialState.firstName || inputName.lastName === initialState.lastName){
+            alert("oops you forgot something");
+        }
+        else{
+        document.getElementById("app-form").reset();
+        setCount(count + 1);
+        }
+    }
+
+    function cleanForm(){
+        setInputName(initialState)
     }
 
         
@@ -40,8 +49,6 @@ function ContactForm() {
                 ...inputName,
                 [event.target.name]: result 
             });
-
-         
        }
 
    useEffect(() => {
@@ -51,18 +58,28 @@ function ContactForm() {
            alert(`Thank you for entering the form!`);
           }, 1000)
         }
+
+      
+         return () => cleanForm()
         
     }, [count]);
 
     useEffect(() => {
-        console.log(`Firstname: ${inputName.firstName}, lastname: ${inputName.lastName}, description ${inputName.desc}`)
+
+        console.log(`Firstname: ${inputName.firstName}, lastname: ${inputName.lastName}, description: ${inputName.desc}`)
+        if(inputName.firstName !== initialState.firstName && inputName.lastName !== initialState.lastName){
+           
+            enableButton = "green";
+            
+        }
+        console.log(`enable btn is set to ${enableButton}`)
     }, [inputName])
  
     return(
 
         <div>
             <Greeting first={inputName.firstName} last={inputName.lastName} />
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id="app-form">
                 <label htmlFor="firstName">
                     Your firstname: 
                     <input name="firstName" id="firstName" onChange={handleGreeting} />
@@ -71,10 +88,11 @@ function ContactForm() {
                <input name="lastName" id="lastName"  onChange={handleGreeting} />
                </label>
                <label htmlFor="desc">
-                   Describe yourself:
+                   Describe yourself (optional):
                    <textarea ref={inputRef}></textarea>
                </label>
-                <button type="submit">Send application</button>
+                {/* <button type="submit" className={enableButton ? "green" : "red"}>Send application</button> */}
+                <SubmitButton btnState={inputName} />
                 
             </form>     
             
