@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 import Greeting from './Greeting.js'
-import Profiles from './Profiles.js'
+import SubmitCounts from './SubmitCounts.js'
 
 function ContactForm() {
 
@@ -13,14 +13,14 @@ function ContactForm() {
     const [inputName, setInputName] = useState(initialState);
     const [count, setCount] = useState(0);
 
-    var inputList = initialState;
     const inputRef = useRef();
     var inputsFilled = false
+
     function handleSubmit(event){
         event.preventDefault();
         var partialState = {};
         partialState['desc'] = inputRef.current.value;
-
+        inputsFilled = true;
         setInputName(inputName => {
             return{
             ...inputName,
@@ -28,7 +28,9 @@ function ContactForm() {
             }
             });
          setCount(count + 1);
-    console.log(`btn shows ${inputName.firstName} and ${inputName.desc}`);
+
+         setInputName(initialState)
+        console.log(`btn shows ${inputsFilled} and ${inputName.desc} `);
     }
 
         
@@ -38,13 +40,23 @@ function ContactForm() {
                 ...inputName,
                 [event.target.name]: result 
             });
+
+         
        }
 
-  
-  
    useEffect(() => {
-   
-    });
+
+        if(count != 0){
+        setTimeout(() => {
+           alert(`Thank you for entering the form!`);
+          }, 1000)
+        }
+        
+    }, [count]);
+
+    useEffect(() => {
+        console.log(`Firstname: ${inputName.firstName}, lastname: ${inputName.lastName}, description ${inputName.desc}`)
+    }, [inputName])
  
     return(
 
@@ -66,7 +78,7 @@ function ContactForm() {
                 
             </form>     
             
-               <Profiles inputs={count} /> 
+               <SubmitCounts inputs={count} /> 
             
         </div>
 

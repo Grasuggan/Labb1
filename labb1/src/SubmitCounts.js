@@ -1,7 +1,7 @@
-import React, {useState, useRef, Component} from 'react'
+import React from 'react'
 import tomatoAv from './tomatoAv.jpg'
 
-function Profiles(props){
+function SubmitCounts(props){
 
 
     return(
@@ -17,4 +17,4 @@ function Profiles(props){
     )
 }
 
-export default Profiles
+export default SubmitCounts
