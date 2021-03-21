@@ -58,7 +58,6 @@ textarea{
   display: flex;
   flex-flow: row;
   align-items: center;
-  background: rgba(125, 125,125, .5);
   margin: 50px 0;
 }
 
@@ -71,4 +70,14 @@ textarea{
 }
 .red{
   background-color: red;
+}
+
+.info {
+  padding: 20px;
+  font-weight: 600;
+  text-align: left
+}
+.info span{
+  font-weight: normal;
+  text-decoration: underline;
 }

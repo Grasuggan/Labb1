@@ -3,32 +3,37 @@ import React, {Component} from 'react'
 class SubmitButton extends React.Component{
     constructor(props) {
         super(props);
-         this.state = { btnColor: 'red'}
     };
-
+  
     renderCurrentBtn(){
-        if(this.props.btnState.firstName !== "" && this.props.btnState.lastName !== ""){
-            // this.setState({
-            //     btnColor: 'green'
-            // })
-
-            // return(this.state.btnColor)
-            return "green"
+       let btnInfo = {
+            color: 'red',
+            text: 'Disabled'
+        }
+        if(this.props.inputState.firstName !== "" && this.props.inputState.lastName !== ""){
+            btnInfo ={
+                
+                color: 'green',
+                text: 'Send'
+            }
         }
         else {
-            return "red"
+            btnInfo = {
+                color: 'red',
+                text: 'Disabled'
+            }
+              
         }
+        return btnInfo
     }
 
     render() {
      
         return (
-           
             <div>
-             <button type="submit" className={this.renderCurrentBtn()}>Send application {this.props.btnState.firstName}</button>
+             <button type="submit" className={this.renderCurrentBtn().color}>{this.renderCurrentBtn().text}</button>
             </div> 
             )
-        
     }
 }
 
