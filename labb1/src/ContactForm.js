@@ -35,14 +35,13 @@ function ContactForm() {
             alert("oops you forgot something");
         }
         else{
-            setCount(count + 1);
-            document.getElementById("app-form").reset();            
+            setCount(C => C + 1);
+            setSubmittedArray(inputName);
+            //  document.getElementById("app-form").reset();            
         }
     }
 
-        function cleanForm(){
-            setInputName(initialState)
-        }
+       
 
         
         function handleGreeting(event){
@@ -55,15 +54,19 @@ function ContactForm() {
 
 
    useEffect(() => {
-        setSubmittedArray(inputName);
-
+     
+    function cleanForm(){
+        setInputName(initialState)
+    }
         if(count != 0){
         setTimeout(() => {
            alert(`Thank you for entering the form!`);
           }, 1000)
         }
     
-         return () => cleanForm()
+         return () => {
+            cleanForm()
+         } 
         
     }, [count]);
 
@@ -71,7 +74,7 @@ function ContactForm() {
 
         <div>
             <Greeting first={inputName.firstName} last={inputName.lastName} />
-            <form onSubmit={handleSubmit} id="app-form">
+            <form onSubmit={handleSubmit} id="app-form" key={count}>
                 <label htmlFor="firstName">
                     Your firstname: 
                     <input name="firstName" id="firstName" onChange={handleGreeting} autoComplete="false" />
