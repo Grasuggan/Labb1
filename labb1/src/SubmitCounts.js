@@ -8,17 +8,17 @@ let submitters;
 if(props.submitters.firstName !== ""){
 
     return ( 
-    submitters =  <div className="profile"><Submitted inputs={props.submitters} /></div>
+    submitters =   <div><label>Form submitted {props.inputs} times</label><div className="profile"><Submitted inputs={props.submitters} /></div></div>
     )
 }
 else{
-    submitters = <div></div>
+    submitters = <div> <label>Form submitted {props.inputs} times</label></div>
 }
  
 
     return(
         <>
-        <label>Form submitted {props.inputs} times</label>
+       
             {submitters}
         </>
     )
