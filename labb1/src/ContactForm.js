@@ -36,8 +36,7 @@ function ContactForm() {
         }
         else{
             setCount(C => C + 1);
-            setSubmittedArray(inputName);
-            //  document.getElementById("app-form").reset();            
+                  
         }
     }
 
@@ -54,7 +53,8 @@ function ContactForm() {
 
 
    useEffect(() => {
-     
+    setSubmittedArray(inputName);
+
     function cleanForm(){
         setInputName(initialState)
     }
