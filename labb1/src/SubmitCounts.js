@@ -4,15 +4,11 @@ import Submitted from './Submitted.js'
 function SubmitCounts(props){
 
 
-let submitters;
-if(props.submitters.firstName !== ""){
-    return ( 
-    submitters =   <div><label>Form submitted {props.inputs} times</label><div className="profile"><Submitted inputs={props.submitters} /></div></div>
-   
-    )
-}
-else{
-    submitters = <div> <label>Form submitted {props.inputs} times</label></div>
+let submitters = null;
+if(props.submitters.length){
+    submitters = props.submitters.map(submitter => (
+        <div className="profile"><Submitted submit={submitter} key={submitter.id}/></div>
+    ))
 }
  
 

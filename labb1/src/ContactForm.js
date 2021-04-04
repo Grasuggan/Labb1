@@ -7,54 +7,63 @@ import SubmitButton from './SubmitButton.js'
 function ContactForm() {
 
     const initialState = {
-        firstName: '',
-        lastName: '',
-        desc: '',
+        id: null,
+        firstName: "",
+        lastName: "",
+        desc: "",
+        time: "" 
       };
     
     const [inputName, setInputName] = useState(initialState);
     const [count, setCount] = useState(0);
-    const [submittedArray, setSubmittedArray] = useState(inputName)
+    const [submittedArray, setSubmittedArray] = useState([]);
   
 
     const inputRef = useRef();
    
 
-    function handleSubmit(event){
+    function handleSubmit(event) {
         event.preventDefault();
-        var partialState = {};
-        partialState['desc'] = inputRef.current.value;
-        setInputName(inputName => {
-            return{
-            ...inputName,
-            ...partialState
-            }
-            });
-
-        if(inputName.firstName === initialState.firstName || inputName.lastName === initialState.lastName){
+        var today = new Date();
+        var subTime = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        const newData = {
+          id: submittedArray.length + 1,
+          firstName: event.target.firstName.value,
+          lastName: event.target.lastName.value,
+          desc: inputRef.current.value,
+          time: subTime
+        };
+    
+        if (
+            newData.firstName === initialState.firstName ||
+            newData.lastName === initialState.lastName
+          ) {
             alert("oops you forgot something");
-        }
-        else{
-            setCount(C => C + 1);
-                  
-        }
-    }
+           
+          } else {
+            setCount((C) => C + 1);
+            const newArray = submittedArray.slice();
+            newArray.push(newData);
+            setSubmittedArray(newArray);
+          
+          }
+      };
 
        
 
         
         function handleGreeting(event){
-            const result = event.target.value
+            const result = event.target.value;
             setInputName({
-                ...inputName,
-                [event.target.name]: result 
+              ...inputName,
+              [event.target.name]: result,
             });
+         
        }
 
 
    useEffect(() => {
-    setSubmittedArray(inputName);
-
+    
     function cleanForm(){
         setInputName(initialState)
     }
@@ -87,7 +96,8 @@ function ContactForm() {
                    <textarea ref={inputRef}></textarea>
                </label>
                 <SubmitButton inputState={inputName} />
-            </form>     
+            </form>    
+            <label>Form submitted {count} times</label> 
                <SubmitCounts inputs={count} submitters={submittedArray}/>             
         </div>
 
